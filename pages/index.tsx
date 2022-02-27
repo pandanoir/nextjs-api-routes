@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 
-const UseAPI = () => {
+const UseHelloAPI = () => {
   const [message, setMessage] = useState('');
   useEffect(() => {
     fetch('/api/hello')
@@ -9,6 +9,19 @@ const UseAPI = () => {
       .then((res) => {
         setMessage(res.message);
       });
+  });
+  return <div>API message: {message}</div>;
+};
+const UseEnvAPI = () => {
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    try {
+      fetch('/api/env')
+        .then((res) => res.json())
+        .then((res) => {
+          setMessage(res.message);
+        });
+    } catch {}
   });
   return <div>API message: {message}</div>;
 };
@@ -20,7 +33,8 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <UseAPI />
+      <UseHelloAPI />
+      <UseEnvAPI />
     </div>
   );
 }
